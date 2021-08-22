@@ -9,19 +9,27 @@
 Different from [Kitti](http://www.cvlibs.net/datasets/kitti/) dataset, MultiviewC contains seven cameras located at four corners of field.There are several angle information thate need to be explained.
 ```
 
-    * theta_w_global [Orient]: cattle's global orientation in world coordinate
+theta_w_global [Orient_w]: cattle's global orientation in world coordinate
     
-    * theta_ref_global: cattle's global orientation in reference camera coordinate
+theta_ref_global: cattle's global orientation in reference camera coordinate
     
-    * theta_c_global : cattle's global orientation in specific camera coordinate  
+theta_c_global [Orient_c]: cattle's global orientation in specific camera coordinate  
     
-    * theta_local [Alpha]: cattle's local orientation in specific camera coordinate 
+theta_local [Alpha]: cattle's local orientation in specific camera coordinate 
     
-    * theta_ray: the angle between the ray from cammera center to objects' center 
+theta_ray: the angle between the ray from cammera center to objects' center 
                  and the y axis of camera.  (angle of camera coordinate)
     
-    * Rz: the rotation angle of camera on Z-axis of the world coordinate
+Rz: the rotation angle of camera on Z-axis of the world coordinate
 ```
+### Formula
+```
+[FORMULA]
+theta_ref_global = theta_w_global + 90
+theta_c_global = theta_ref_global - R_z
+theta_c_global = theta_local + theta_ray
+```
+
 ## Reference
 * 3D Bounding Box Estimation Using Deep Learning and Geometry. [Paper](https://arxiv.org/abs/1612.00496).
 * PyTorch implementation for this paper. [Link](https://github.com/skhadem/3D-BoundingBox).
