@@ -21,14 +21,15 @@ theta_ray: the angle between the ray from cammera center to objects' center
                  and the y axis of camera.  (angle of camera coordinate)
     
 Rz: the rotation angle of camera on Z-axis of the world coordinate
-```
-### Formula
-```
+
 [FORMULA]
 theta_ref_global = theta_w_global + 90
+
 theta_c_global = theta_ref_global - R_z
+
 theta_c_global = theta_local + theta_ray
 ```
+More details about rotatin angle refer to this [note](https://github.com/Robert-Mar/Deep3DBox_for_MultiviewC/tree/main/notes).
 
 ## Reference
 * 3D Bounding Box Estimation Using Deep Learning and Geometry. [Paper](https://arxiv.org/abs/1612.00496).
