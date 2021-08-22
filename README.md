@@ -6,5 +6,5 @@
 ![alt text](https://github.com/Robert-Mar/Deep3DBox_for_MultiviewC/blob/main/results/C6.png "Visualization of Camera6")
 
 ## Reference
-* 3D Bounding Box Estimation Using Deep Learning and Geometry. [paper](https://arxiv.org/abs/1612.00496).
+* 3D Bounding Box Estimation Using Deep Learning and Geometry. [Paper](https://arxiv.org/abs/1612.00496).
 * PyTorch implementation for this paper. [Link](https://github.com/skhadem/3D-BoundingBox).
