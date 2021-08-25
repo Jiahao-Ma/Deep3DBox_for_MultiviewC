@@ -166,10 +166,10 @@ def cal_location(dimension, proj_matrix, bbox_2d, alpha, orient):
     return best_loc, best_X
 
 if __name__ == "__main__":
-    from data.dataset import MultiviewC_dataset, inverse
+    from data.MultiviewCdataset import MultiviewC_dataset, inverse
     from data.util import project_to_image
     import matplotlib.pyplot as plt
-    MC = MultiviewC_dataset(bbox_mode='2D', train_mode='train')
+    MC = MultiviewC_dataset(mode='train')
     for i in range(0, 7):
         labels, image = MC.get_example_batch(i)
         error = 0
@@ -186,8 +186,8 @@ if __name__ == "__main__":
             theta_c_global = label['Orient_c']
             location = label['Location']
             bbox_2d = label['Box_2d']
-            best_loc, best_X = cal_location(get_worldcoord_for_imagecoord(dimension), P_matrix, bbox_2d, alpha, orient)
-            error += sum(np.array(best_loc) - np.array(get_worldcoord_for_imagecoord(location)))
+            best_loc, best_X = cal_location(dimension, P_matrix, bbox_2d, alpha, orient)
+            error += sum(np.array(best_loc) - np.array(location))
             projected_bbox_2d = compute_3d_bbox(dimension, orient, location, P_matrix) #get_worldgrid_from_worldcoord(best_loc)
             [ymin, xmin, ymax, xmax] = bbox_2d.reshape(-1)
             width = int(xmax - xmin)

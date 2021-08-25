@@ -7,6 +7,39 @@ import colorsys
 import math, json
 from utils import array_tool as at
 
+def resize_bbox(bbox, in_size, out_size):
+    """Resize bounding boxes according to image resize.
+
+    The bounding boxes are expected to be packed into a two dimensional
+    tensor of shape :math:`(R, 4)`, where :math:`R` is the number of
+    bounding boxes in the image. The second axis represents attributes of
+    the bounding box. They are :math:`(y_{min}, x_{min}, y_{max}, x_{max})`,
+    where the four attributes are coordinates of the top left and the
+    bottom right vertices.
+
+    Args:
+        bbox (~numpy.ndarray): An array whose shape is :math:`(R, 4)`.
+            :math:`R` is the number of bounding boxes.
+        in_size (tuple): A tuple of length 2. The height and the width
+            of the image before resized.
+        out_size (tuple): A tuple of length 2. The height and the width
+            of the image after resized.
+
+    Returns:
+        ~numpy.ndarray:
+        Bounding boxes rescaled according to the given image shapes.
+
+    """
+    bbox = bbox.copy()
+    y_scale = float(out_size[0]) / in_size[0]
+    x_scale = float(out_size[1]) / in_size[1]
+    bbox[:, 0] = y_scale * bbox[:, 0]
+    bbox[:, 2] = y_scale * bbox[:, 2]
+    bbox[:, 1] = x_scale * bbox[:, 1]
+    bbox[:, 3] = x_scale * bbox[:, 3]
+    return bbox
+
+
 def read_image(path, dtype=np.float32, color=True):
     """Read an image from a file.
 
@@ -101,14 +134,11 @@ def project_to_image(corner_3d, calib):
 
 
 def compute_3d_bbox(dimension, rotation, location, calib):
-    dimension = get_worldcoord_for_imagecoord(dimension)
-    location = get_worldcoord_for_imagecoord(location)
     h, w, l = dimension[0], dimension[1], dimension[2]
     x = [-l / 2, l / 2, l / 2, -l / 2, -l / 2, l / 2, l / 2, -l / 2]
     y = [-w / 2, -w / 2, w / 2, w / 2, -w / 2, -w / 2, w / 2, w / 2]
     z = [0, 0, 0, 0, h, h, h, h]
-    if rotation > np.pi:
-        rotation = np.deg2rad(rotation)
+    # NOTICE! rotation: -np.pi ~ np.pi ! instead of -180 ~ 180
     rotMat = rotz(rotation)
     corner_3d = np.vstack([x, y, z])
     corner_3d = np.dot(rotMat, corner_3d)
@@ -156,3 +186,12 @@ def inverse(img):
     img = at.tonumpy(img)
     img = inverse_normalize(img)
     return np.transpose(img, axes=[1, 2, 0]).astype(np.uint8)
+
+def generate_bins(bins):
+    angle_bins = np.zeros(bins)
+    interval = 2 * np.pi / bins
+    for i in range(1,bins):
+        angle_bins[i] = i * interval
+    angle_bins += interval / 2 # center of the bin
+
+    return angle_bins
