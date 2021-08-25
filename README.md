@@ -1,9 +1,13 @@
-# Deep3DBBox_for_MultiviewC
+# Deep3DBox_for_MultiviewC
  Pytorch implementation for Deep3DBox on [MultiviewC dataset](https://github.com/Robert-Mar/MultiviewC).
  
 ## Visualization 
 ![alt text](https://github.com/Robert-Mar/Deep3DBox_for_MultiviewC/blob/main/results/C0.png "Visualization of Camera1")
 ![alt text](https://github.com/Robert-Mar/Deep3DBox_for_MultiviewC/blob/main/results/C6.png "Visualization of Camera6")
+
+## Model Checkpoint
+2D detection part: [FasterRCNN](https://drive.google.com/file/d/1JQPuuKuZxyvEqjgujSS1m3FvfuoWokDM/view?usp=sharing).
+3D detection part: [Deep3DBox](https://drive.google.com/file/d/1S6ttmu_V6Hle0U4frHEopY79ltyQL90Z/view?usp=sharing).
 
 ## Angle Adjustment
 Different from [Kitti](http://www.cvlibs.net/datasets/kitti/) dataset, MultiviewC contains seven cameras located at four corners of field.There are several angle information thate need to be explained.
